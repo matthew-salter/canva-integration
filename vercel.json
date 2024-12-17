@@ -1,6 +1,9 @@
 {
   "routes": [
-    { "src": "/api/callback", "dest": "/api/callback.js" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/callback.js"
+    }
   ]
 }
 
