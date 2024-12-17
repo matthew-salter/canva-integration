@@ -6,8 +6,7 @@ require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
 
-// OAuth Redirect Endpoint
-app.get('/callback', async (req, res) => {
+app.get('/api/callback', async (req, res) => {
     const code = req.query.code;
     if (!code) {
         return res.status(400).send('Missing authorization code');
@@ -30,13 +29,4 @@ app.get('/callback', async (req, res) => {
     }
 });
 
-// Vercel deployment requires module.exports
-const PORT = process.env.PORT || 3000;
-if (process.env.VERCEL) {
-    module.exports = app; // Required for Vercel deployment
-} else {
-    app.listen(PORT, () => {
-        console.log(`Server running on http://localhost:${PORT}`);
-    });
-}
-
+module.exports = app;
