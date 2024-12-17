@@ -1,12 +1,6 @@
-const express = require('express');
 const axios = require('axios');
-const bodyParser = require('body-parser');
-require('dotenv').config();
 
-const app = express();
-app.use(bodyParser.json());
-
-app.get('/api/callback', async (req, res) => {
+module.exports = async (req, res) => {
     const code = req.query.code;
     if (!code) {
         return res.status(400).send('Missing authorization code');
@@ -27,14 +21,5 @@ app.get('/api/callback', async (req, res) => {
         console.error(error.response ? error.response.data : error.message);
         res.status(500).send('Error fetching access token');
     }
-});
-
-// Export the app for Vercel
-module.exports = async (req, res) => {
-    const code = req.query.code;
-    if (!code) {
-        return res.status(400).send('Missing authorization code');
-    }
-
-    res.send(`Received code: ${code}`);
 };
+
