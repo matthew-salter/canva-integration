@@ -30,4 +30,11 @@ app.get('/api/callback', async (req, res) => {
 });
 
 // Export the app for Vercel
-module.exports = app;
+module.exports = async (req, res) => {
+    const code = req.query.code;
+    if (!code) {
+        return res.status(400).send('Missing authorization code');
+    }
+
+    res.send(`Received code: ${code}`);
+};
