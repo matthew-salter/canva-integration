@@ -1,3 +1,18 @@
+const express = require('express');
+const axios = require('axios');
+const bodyParser = require('body-parser');
+require('dotenv').config(); // Load environment variables
+
+// Log environment variables to verify they are loaded correctly
+console.log("CANVA_CLIENT_ID:", process.env.CANVA_CLIENT_ID);
+console.log("REDIRECT_URL:", process.env.REDIRECT_URL);
+
+const app = express();
+app.use(bodyParser.json());
+
+const PORT = process.env.PORT || 3000;
+
+// OAuth Redirect Endpoint
 app.get('/callback', async (req, res) => {
     const code = req.query.code;
     if (!code) {
@@ -21,5 +36,6 @@ app.get('/callback', async (req, res) => {
     }
 });
 
-
-
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
